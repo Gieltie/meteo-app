@@ -48,7 +48,7 @@ const Weather = () => {
   const fetchWeather = async (cityName) => {
     if (cityName) {
       const apiKey = '5f8947007f3d5e078969d2b105222dad';
-      const apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
       const response = await axios.get(apiUrl);
       setWeatherData(response.data);
       console.log(response.data)

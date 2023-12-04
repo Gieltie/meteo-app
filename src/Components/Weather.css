@@ -1,5 +1,5 @@
 .container {
-  width: calc(100vw - 4em);
+  width: auto;
   height: calc(100vh - 4em);
   margin: auto;
   margin-top: 2em;
