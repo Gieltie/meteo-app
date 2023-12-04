@@ -5,10 +5,7 @@ function App() {
 
   return (
     <>
-      <h1>Meteo</h1>
-      <div className="card">
-        <Weather />
-      </div>
+      <Weather />
     </>
   )
 }

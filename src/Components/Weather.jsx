@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import { FaSearch } from 'react-icons/fa';
+import './Weather.css';
+/* import { makeStyles } from '@material-ui/core/styles'; */
 
-const useStyles = makeStyles({
+/* const useStyles = makeStyles({
   watchContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -25,13 +25,13 @@ const useStyles = makeStyles({
     color: '#000',
     marginBottom: '20px',
   },
-});
+}); */
 
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [cityImage, setCityImage] = useState(null);
   const [city, setCity] = useState('');
-  const classes = useStyles();
+  /* const classes = useStyles(); */
 
   const fetchCityImage = async (cityName) => {
     const apiUrl = 'Ooak_dDC5hujuD6yKFLycI7F1kJS4dBbwGvWn36DmvE'
@@ -63,21 +63,22 @@ const Weather = () => {
   };
 
   return (
-    <div className={classes.watchContainer}>
-      <form onSubmit={handleSearch} className={classes.form}>
-        <img src={cityImage} alt="" className='image'/>
-        <TextField
+    <div className='container'>
+      <form onSubmit={handleSearch} className='top-bar'>
+        <input
           type="text"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          placeholder="Enter city"
+          placeholder="Nom de la ville"
+          className='input'
         />
-        <Button type="submit">Search</Button>
+        <button type="submit"><FaSearch /></button>
       </form>
       {weatherData && (
         <div>
           <h2>Ville: {weatherData.city.name}</h2>
           <p>Temperature: {weatherData.forecast[0].tmax} °C</p>
+          <img src={cityImage} alt="" className='image'/>
         </div>
       )}
     </div>
