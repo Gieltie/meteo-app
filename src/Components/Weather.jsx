@@ -2,10 +2,43 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  watchContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '500px',
+    backgroundColor: '#000',
+    borderRadius: '10%',
+    border: '10px solid #444',
+    maxWidth: '400px',
+    margin: '0 auto',
+    padding: '20px',
+  },
+  form: {
+    backgroundColor: '#fff',
+    padding: '10px',
+    borderRadius: '5px',
+    color: '#000',
+    marginBottom: '20px',
+  },
+});
 
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
+  const [cityImage, setCityImage] = useState(null);
   const [city, setCity] = useState('');
+  const classes = useStyles();
+
+  const fetchCityImage = async (cityName) => {
+    const apiUrl = 'Ooak_dDC5hujuD6yKFLycI7F1kJS4dBbwGvWn36DmvE'
+    const response = await axios.get(`https://api.unsplash.com/search/photos?query=${cityName}&client_id=${apiUrl}`);
+    console.log(response.data.results[0].urls.regular)
+    setCityImage(response.data.results[0].urls.regular);
+  };
 
   const fetchInseeCode = async (cityName) => {
     const response = await axios.get(`https://geo.api.gouv.fr/communes?nom=${cityName}&fields=nom,code&format=json&geometry=centre`);
@@ -26,11 +59,13 @@ const Weather = () => {
     event.preventDefault();
     const inseeCode = await fetchInseeCode(city);
     fetchWeather(inseeCode);
+    fetchCityImage(city);
   };
 
   return (
-    <div>
-      <form onSubmit={handleSearch}>
+    <div className={classes.watchContainer}>
+      <form onSubmit={handleSearch} className={classes.form}>
+        <img src={cityImage} alt="" className='image'/>
         <TextField
           type="text"
           value={city}
@@ -42,7 +77,7 @@ const Weather = () => {
       {weatherData && (
         <div>
           <h2>Ville: {weatherData.city.name}</h2>
-          <p>Temperature max: {weatherData.forecast[0].tmax} °C</p>
+          <p>Temperature: {weatherData.forecast[0].tmax} °C</p>
         </div>
       )}
     </div>
