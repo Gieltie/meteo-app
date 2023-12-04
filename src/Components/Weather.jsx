@@ -29,26 +29,26 @@ import './Weather.css';
 
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
-  const [cityImage, setCityImage] = useState(null);
+  //const [cityImage, setCityImage] = useState(null);
   const [city, setCity] = useState('');
   /* const classes = useStyles(); */
 
-  const fetchCityImage = async (cityName) => {
+/*   const fetchCityImage = async (cityName) => {
     const apiUrl = 'Ooak_dDC5hujuD6yKFLycI7F1kJS4dBbwGvWn36DmvE'
     const response = await axios.get(`https://api.unsplash.com/search/photos?query=${cityName}&client_id=${apiUrl}`);
     console.log(response.data.results[0].urls.regular)
     setCityImage(response.data.results[0].urls.regular);
-  };
+  }; */
 
-  const fetchInseeCode = async (cityName) => {
+  /* const fetchInseeCode = async (cityName) => {
     const response = await axios.get(`https://geo.api.gouv.fr/communes?nom=${cityName}&fields=nom,code&format=json&geometry=centre`);
     return response.data[0].code;
-  };
+  }; */
 
-  const fetchWeather = async (inseeCode) => {
-    if (inseeCode) {
-      const apiKey = '812b48888f2a14b7a685aa189d028f88ccab259b5feac47a6dfbcec80d622612';
-      const apiUrl = `https://api.meteo-concept.com/api/forecast/daily?insee=${inseeCode}&token=${apiKey}`;
+  const fetchWeather = async (cityName) => {
+    if (cityName) {
+      const apiKey = '5f8947007f3d5e078969d2b105222dad';
+      const apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
       const response = await axios.get(apiUrl);
       setWeatherData(response.data);
       console.log(response.data)
@@ -57,9 +57,8 @@ const Weather = () => {
 
   const handleSearch = async (event) => {
     event.preventDefault();
-    const inseeCode = await fetchInseeCode(city);
-    fetchWeather(inseeCode);
-    fetchCityImage(city);
+    fetchWeather(city);
+    //fetchCityImage(city);
   };
 
   return (
@@ -72,13 +71,13 @@ const Weather = () => {
           placeholder="Nom de la ville"
           className='input'
         />
-        <button type="submit"><FaSearch /></button>
+        <button type="submit" className='search-icon'><FaSearch/></button>
       </form>
       {weatherData && (
         <div>
-          <h2>Ville: {weatherData.city.name}</h2>
-          <p>Temperature: {weatherData.forecast[0].tmax} °C</p>
-          <img src={cityImage} alt="" className='image'/>
+          <h2>Ville: {weatherData.name}</h2>
+          <p>Temperature: {Math.ceil(weatherData.main.temp - 273.15)} °C</p>
+          {/* <img src={cityImage} alt="" className='image'/> */}
         </div>
       )}
     </div>

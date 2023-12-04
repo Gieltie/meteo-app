@@ -18,7 +18,7 @@
 .top-bar input {
   display: flex;
   width: 40%;
-  height: 3.5em;
+  height: 3em;
   border: none;
   outline: none;
   border-radius: 2em;
@@ -28,6 +28,18 @@
   color: black;
 }
 
+.search-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3em;
+  height: 3em;
+  border-radius: 2em;
+  border: none;
+  background-color: #fff;
+  color: black;
+  cursor: pointer;
+}
 .image {
   width: 50%;
   height: auto;
