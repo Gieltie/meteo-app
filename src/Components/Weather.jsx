@@ -35,11 +35,14 @@ const Weather = () => {
     const apiUrl = 'Ooak_dDC5hujuD6yKFLycI7F1kJS4dBbwGvWn36DmvE'
     const response = await axios.get(`https://api.unsplash.com/search/photos?query=${cityName}&client_id=${apiUrl}`);
     
-    const resultsLength = response.data.results.length;
-    const randomIndex = Math.floor(Math.random() * resultsLength);
-    const randomImage = response.data.results[randomIndex].urls.regular;
-    
-    setCityImage(randomImage);
+    if (response.data.results.length === 0) {
+      setCityImage(null); 
+    } else {
+      const resultsLength = response.data.results.length;
+      const randomIndex = Math.floor(Math.random() * resultsLength);
+      const randomImage = response.data.results[randomIndex].urls.regular;
+      setCityImage(randomImage);
+    }
   };
 
   const fetchWeather = async (cityName) => {
