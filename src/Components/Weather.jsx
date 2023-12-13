@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+
 import { FaSearch } from 'react-icons/fa';
 import { GiSunrise, GiSunset } from "react-icons/gi"
 import { FaTemperatureArrowDown, FaTemperatureArrowUp } from "react-icons/fa6";
@@ -41,8 +42,8 @@ const Weather = () => {
   };
 
   const fetchCityImage = async (cityName) => {
-    const apiUrl = 'Ooak_dDC5hujuD6yKFLycI7F1kJS4dBbwGvWn36DmvE'
-    const response = await axios.get(`https://api.unsplash.com/search/photos?query=${cityName}&client_id=${apiUrl}&orientation=landscape`);
+    const unsplashApiKey = import.meta.env.VITE_REACT_APP_UNSPLASH_API_KEY;
+    const response = await axios.get(`https://api.unsplash.com/search/photos?query=${cityName}&client_id=${unsplashApiKey}&orientation=landscape`);
     
     if (response.data.results.length === 0) {
       setCityImage(null); 
@@ -56,8 +57,8 @@ const Weather = () => {
 
   const fetchWeather = async (cityName) => {
     if (cityName) {
-      const apiKey = '5f8947007f3d5e078969d2b105222dad';
-      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
+      const openWeatherApiKey = import.meta.env.VITE_REACT_APP_OPEN_WEATHER_API_KEY;
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${openWeatherApiKey}&units=metric`;
       const response = await axios.get(apiUrl);
       setWeatherData(response.data);
       console.log(response.data)
